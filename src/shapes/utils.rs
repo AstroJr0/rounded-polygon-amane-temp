@@ -4,6 +4,7 @@
 use crate::geometry::offset::Offset;
 use crate::shapes::corner_rounding::CornerRounding;
 use crate::shapes::point::Point;
+use crate::shapes::rounded_polygon::RoundedPolygon;
 
 /// Tolerance used when comparing distances.
 pub const DISTANCE_EPSILON: f32 = 1e-4;
@@ -150,6 +151,45 @@ pub fn do_repeat(
     }
 }
 
+/// Builds a polygon whose corners are `points`, repeated as by [`do_repeat`].
+///
+/// Each point brings its own rounding. The polygon is centered on `center`.
+///
+/// # Examples
+///
+/// ```rust
+/// use rounded_polygon_amane::geometry::offset::Offset;
+/// use rounded_polygon_amane::shapes::corner_rounding::CornerRounding;
+/// use rounded_polygon_amane::shapes::utils::{custom_polygon, PointNRound};
+///
+/// // A rounded triangle: one corner, repeated three times around the center.
+/// let corner = PointNRound::new(Offset::new(0.5, 1.0), CornerRounding::from_radius(0.1));
+/// let triangle = custom_polygon(&[corner], 3, Offset::new(0.5, 0.5), false);
+///
+/// assert_eq!(triangle.features().len(), 6);
+/// ```
+#[must_use]
+pub fn custom_polygon(
+    points: &[PointNRound],
+    reps: usize,
+    center: Offset,
+    mirroring: bool,
+) -> RoundedPolygon {
+    let repeated = do_repeat(points, reps, center, mirroring);
+    let vertices: Vec<f32> = repeated
+        .iter()
+        .flat_map(|p| [p.offset.x, p.offset.y])
+        .collect();
+    let per_vertex_rounding: Vec<CornerRounding> = repeated.iter().map(|p| p.rounding).collect();
+
+    RoundedPolygon::from_vertices(
+        &vertices,
+        CornerRounding::UNROUNDED,
+        Some(&per_vertex_rounding),
+        Some(Point::new(center.x, center.y)),
+    )
+}
+
 fn repeat_rotated(points: &[PointNRound], reps: usize, center: Offset) -> Vec<PointNRound> {
     let count = points.len();
 
@@ -214,6 +254,100 @@ mod tests {
 
     fn near(a: Offset, b: Offset) -> bool {
         (a.x - b.x).abs() < EPSILON && (a.y - b.y).abs() < EPSILON
+    }
+
+    fn square_points(rounding: CornerRounding) -> [PointNRound; 4] {
+        [
+            PointNRound::new(Offset::new(0.0, 0.0), rounding),
+            PointNRound::new(Offset::new(1.0, 0.0), rounding),
+            PointNRound::new(Offset::new(1.0, 1.0), rounding),
+            PointNRound::new(Offset::new(0.0, 1.0), rounding),
+        ]
+    }
+
+    #[test]
+    fn custom_polygon_makes_a_corner_and_an_edge_per_point() {
+        let square = custom_polygon(
+            &square_points(CornerRounding::UNROUNDED),
+            1,
+            Offset::new(0.5, 0.5),
+            false,
+        );
+
+        assert_eq!(square.features().len(), 8);
+    }
+
+    #[test]
+    fn custom_polygon_is_centered_on_the_given_center() {
+        let square = custom_polygon(
+            &square_points(CornerRounding::UNROUNDED),
+            1,
+            Offset::new(0.5, 0.5),
+            false,
+        );
+
+        assert_eq!(square.center(), Point::new(0.5, 0.5));
+    }
+
+    #[test]
+    fn custom_polygon_uses_each_points_own_rounding() {
+        let sharp = custom_polygon(
+            &square_points(CornerRounding::UNROUNDED),
+            1,
+            Offset::new(0.5, 0.5),
+            false,
+        );
+        let rounded = custom_polygon(
+            &square_points(CornerRounding::from_radius(0.1)),
+            1,
+            Offset::new(0.5, 0.5),
+            false,
+        );
+
+        assert!(rounded.cubics().len() > sharp.cubics().len());
+    }
+
+    #[test]
+    fn custom_polygon_repeats_the_points_around_the_center() {
+        let corner = PointNRound::unrounded(Offset::new(1.0, 0.5));
+
+        let diamond = custom_polygon(&[corner], 4, Offset::new(0.5, 0.5), false);
+
+        assert_eq!(diamond.features().len(), 8);
+    }
+
+    #[test]
+    fn custom_polygon_of_a_repeated_corner_is_symmetric_about_its_center() {
+        let corner = PointNRound::unrounded(Offset::new(1.0, 0.5));
+
+        let diamond = custom_polygon(&[corner], 4, Offset::new(0.5, 0.5), false);
+        let [min_x, min_y, max_x, max_y] = diamond.calculate_bounds(false);
+
+        assert!(near(Offset::new(min_x, min_y), Offset::new(0.0, 0.0)));
+        assert!(near(Offset::new(max_x, max_y), Offset::new(1.0, 1.0)));
+    }
+
+    #[test]
+    fn custom_polygon_with_mirroring_lays_out_the_mirrored_points() {
+        let points = [
+            PointNRound::unrounded(Offset::new(1.0, 0.0)),
+            PointNRound::unrounded(Offset::new(2.0, 2.0)),
+        ];
+
+        let polygon = custom_polygon(&points, 1, Offset::ZERO, true);
+
+        // 2 points on the first sector plus 1 mirrored point.
+        assert_eq!(polygon.features().len(), 6);
+    }
+
+    #[test]
+    fn custom_polygon_of_no_points_is_a_single_point_at_the_center() {
+        let polygon = custom_polygon(&[], 1, Offset::new(0.5, 0.5), false);
+
+        assert_eq!(
+            polygon.cubics(),
+            [crate::shapes::cubic::Cubic::empty(0.5, 0.5)]
+        );
     }
 
     #[test]
@@ -485,4 +619,4 @@ mod tests {
         assert_eq!(repeated[2].rounding, rounding);
     }
 }
-  
+                                     
