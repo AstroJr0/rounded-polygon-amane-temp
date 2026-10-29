@@ -1,4 +1,4 @@
-# Morphing rounded polygons in Rust
+<h1 align="center">Morphing Rounded Polygons in Rust</h1>
 
 A shape library made *specifically* for [amane](https://github.com/MystiaFin/amane). Draw rounded polygons, and watch them morph into each other.
 
@@ -6,7 +6,7 @@ It includes the 35 [Material Design shapes](https://m3.material.io/styles/shape/
 
 *pstt.. heres the [cheatsheet](./helps/CHEATSHEET.md)*
 
-## Credits
+<h2 align="center">Credits</h2>
 
 This is an amane port of:
 
@@ -14,7 +14,7 @@ This is an amane port of:
 - [Knugel's TypeScript port](https://github.com/Knugel/rounded-polygon-ts) of it. also thanks to [end-4's QML port](https://github.com/end-4/rounded-polygon-qmljs).
 - and [amane](https://github.com/Mystiafin/amane), which is an awesome desktop UI framework.. Thank u, [MystiaFin](https://github.com/MystiaFin).
 
-## Installation
+<h2 align="center">Installation</h2>
 
 Actually, no installation required! Just clone this repo inside your amane dots and you're good to go:
 
@@ -42,7 +42,7 @@ your-awesome-shell/
 
 No `Cargo.toml` changes. It only uses `amane`, which your shell *is supposed to have*.
 
-## Usage
+<h2 align="center">Usage</h2>
 
 Every example below is a function that returns a widget. `ShapeCanvas::build()` gives you a normal amane `Rectangle`, so you can add `.on_click(...)`, `.opacity(...)` and the rest to it.
 
@@ -69,7 +69,7 @@ impl Service for Toggle {
 }
 ```
 
-1) A material shape
+<h3 align="center">A Material Shape</h3>
 
 <details>
 <summary>Show code</summary>
@@ -90,7 +90,7 @@ Each one is a function in `material_shapes`, so `material_shapes::heart` can be 
 
 All list of shapes are available [here](./helps/shapes.md)
 
-2) A material shape morphing into another material shape
+<h3 align="center">A material shape morphing into another material shape</h3>
 
 Click it, and the cookie morphs into a flower and back:
 
@@ -119,7 +119,7 @@ fn cookie_to_flower() -> Rectangle {
 
 </details>
 
-3) A custom polygon
+<h3 align="center">A custom polygon</h3>
 
 A `PointNRound` is a corner: where it is, and how round it is. Give `custom_polygon` the corners of one slice, and how many times to repeat it around the center:
 
@@ -146,7 +146,7 @@ fn star() -> Rectangle {
 
 The last argument mirrors every other slice. Corners take a radius, plus an optional smoothing: `CornerRounding::new(radius, smoothing)`.
 
-4) A custom polygon morphing into a custom polygon
+<h3 align="center">A custom polygon morphing into another custom polygon</h3>
 
 <details>
 <summary>Show code</summary>
@@ -182,7 +182,8 @@ fn triangle_to_hexagon() -> Rectangle {
 > Polygons with a different number of corners morph fine. The corners are matched up for you.
 > This one also turns half a turn on every morph.
 
-5) A custom polygon morphing into a material shape
+
+<h3 align="center">A custom polygon morphine into a material shape</h3>
 
 `custom_polygon` and `material_shapes` are the same type, so they mix freely:
 
