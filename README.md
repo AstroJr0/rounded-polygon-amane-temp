@@ -11,10 +11,8 @@ It includes the 35 [Material Design shapes](https://m3.material.io/styles/shape/
 This is an amane port of:
 
 - [Androidx's shape library](https://developer.android.com/jetpack/androidx/releases/graphics), the original.
-- [Knugel's TypeScript port](https://github.com/Knugel/rounded-polygon-ts) of it.
-- [end-4's QML port](https://github.com/end-4/rounded-polygon-qmljs), with the 35 Material shapes. Thank u, end-4.
+- [Knugel's TypeScript port](https://github.com/Knugel/rounded-polygon-ts) of it. also thanks to [end-4's QML port](https://github.com/end-4/rounded-polygon-qmljs).
 - and [amane](https://github.com/Mystiafin/amane), which is an awesome desktop UI framework.. Thank u, MystiaFin.
-
 
 ## Installation
 
@@ -42,7 +40,7 @@ my-shell/
         └── ...
 ```
 
-No `Cargo.toml` changes. It only uses `amane`, which your shell already has.
+No `Cargo.toml` changes. It only uses `amane`, which your shell *supposed to have*.
 
 ## Usage
 
