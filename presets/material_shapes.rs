@@ -9,10 +9,10 @@
 
 use std::sync::LazyLock;
 
-use super::super::geometry::offset::Offset;
-use super::super::graphics::matrix::Matrix;
-use super::super::shapes::corner_rounding::CornerRounding;
-use super::super::shapes::point::Point;
+use super::super::handlers::matrix::Matrix;
+use super::super::handlers::offset::Offset;
+use super::super::shapes::corners::CornerRounding;
+use super::super::shapes::points::Point;
 use super::super::shapes::rounded_polygon::RoundedPolygon;
 use super::super::shapes::utils::{custom_polygon, PointNRound};
 
