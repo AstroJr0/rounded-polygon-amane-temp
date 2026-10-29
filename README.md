@@ -12,7 +12,7 @@ This is an amane port of:
 
 - [Androidx's shape library](https://developer.android.com/jetpack/androidx/releases/graphics), the original.
 - [Knugel's TypeScript port](https://github.com/Knugel/rounded-polygon-ts) of it. also thanks to [end-4's QML port](https://github.com/end-4/rounded-polygon-qmljs).
-- and [amane](https://github.com/Mystiafin/amane), which is an awesome desktop UI framework.. Thank u, MystiaFin.
+- and [amane](https://github.com/Mystiafin/amane), which is an awesome desktop UI framework.. Thank u, [MystiaFin](https://github.com/MystiaFin).
 
 ## Installation
 
@@ -28,10 +28,10 @@ Then declare it in your `main.rs`:
 mod rounded_polygon_amane;
 ```
 
-This is where it goes:
+This is how it should look:
 
 ```
-my-shell/
+your-awesome-shell/
 ├── Cargo.toml
 └── src/
     ├── main.rs                  ← mod rounded_polygon_amane;
@@ -40,7 +40,7 @@ my-shell/
         └── ...
 ```
 
-No `Cargo.toml` changes. It only uses `amane`, which your shell *supposed to have*.
+No `Cargo.toml` changes. It only uses `amane`, which your shell *is supposed to have*.
 
 ## Usage
 
@@ -53,8 +53,9 @@ use crate::rounded_polygon_amane::{
     custom_polygon, CornerRounding, Offset, PointNRound, RoundedPolygon, ShapeCanvas,
 };
 ```
+A morph happens by itself whenever the polygon you hand to `rounded_polygon` changes between redraws.
 
-A morph happens by itself whenever the polygon you hand to `rounded_polygon` changes between redraws. To see one, you need some state to change. The examples use a small [service](https://mystiafin.github.io/amane/services.html) with one switch:
+To see one, you need some state to change. Examples below use a small [service](https://mystiafin.github.io/amane/services.html) with one switch:
 
 ```rust
 struct Toggle {
@@ -68,7 +69,7 @@ impl Service for Toggle {
 }
 ```
 
-A material shape
+1) A material shape
 
 <details>
 <summary>Show code</summary>
@@ -89,7 +90,7 @@ Each one is a function in `material_shapes`, so `material_shapes::heart` can be 
 
 All list of shapes are available [here](./helps/shapes.md)
 
-A material shape morphing into another material shape
+2) A material shape morphing into another material shape
 
 Click it, and the cookie morphs into a flower and back:
 
@@ -118,7 +119,7 @@ fn cookie_to_flower() -> Rectangle {
 
 </details>
 
-A custom polygon
+3) A custom polygon
 
 A `PointNRound` is a corner: where it is, and how round it is. Give `custom_polygon` the corners of one slice, and how many times to repeat it around the center:
 
@@ -145,7 +146,7 @@ fn star() -> Rectangle {
 
 The last argument mirrors every other slice. Corners take a radius, plus an optional smoothing: `CornerRounding::new(radius, smoothing)`.
 
-A custom polygon morphing into a custom polygon
+4) A custom polygon morphing into a custom polygon
 
 <details>
 <summary>Show code</summary>
@@ -181,9 +182,9 @@ fn triangle_to_hexagon() -> Rectangle {
 > Polygons with a different number of corners morph fine. The corners are matched up for you.
 > This one also turns half a turn on every morph.
 
-A custom polygon morphing into a material shape
+5) A custom polygon morphing into a material shape
 
-Custom and material polygons are the same type, so they mix freely:
+`custom_polygon` and `material_shapes` are the same type, so they mix freely:
 
 <details>
 <summary>Show code</summary>
@@ -215,10 +216,9 @@ fn custom_to_material() -> Rectangle {
 
 </details>
 
-Put any of these in a window like any other widget: `LayerWindow::new().width(96.0).height(96.0).child(heart())`.
+you can also put any of these in a window like any other widget: `LayerWindow::new().width(96.0).height(96.0).child(heart())`.
 
 Want something on top of a shape? Put both in a `Stack`: the shape first, then a `Rectangle` or *something else* holding the `something` i.e. `Text`.
 
 ## License
-
-[Apache-2.0](./LICENSE), like the projects above.
+[Apache-2.0](./LICENSE)
