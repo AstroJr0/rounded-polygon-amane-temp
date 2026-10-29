@@ -1,3 +1,0 @@
-//! Transforms.
-
-pub mod matrix;
