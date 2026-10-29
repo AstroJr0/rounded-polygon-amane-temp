@@ -27,16 +27,15 @@
 // Drop-in module: most of the API is unused by any one shell.
 #![allow(dead_code, unused_imports)]
 
-pub mod geometry;
-pub mod graphics;
+pub mod handlers;
 pub mod presets;
 pub mod shapes;
 
-pub use geometry::offset::Offset;
-pub use graphics::matrix::Matrix;
-pub use shapes::corner_rounding::CornerRounding;
-pub use shapes::morph::Morph;
-pub use shapes::point::Point;
+pub use handlers::matrix::Matrix;
+pub use handlers::offset::Offset;
+pub use shapes::corners::CornerRounding;
+pub use shapes::points::Point;
+pub use shapes::polygon_manager::Morph;
 pub use shapes::rounded_polygon::RoundedPolygon;
 pub use shapes::utils::{custom_polygon, do_repeat, PointNRound};
 
@@ -48,7 +47,7 @@ use std::time::Instant;
 use amane::{request_frame, Canvas, Cap, Color, Path, Rectangle, Shape};
 
 use presets::easing;
-use shapes::cubic::Cubic;
+use shapes::polygon_manager::Cubic;
 
 /// Radius of the dots drawn by [`ShapeCanvas::debug`], in pixels.
 const DEBUG_DOT: f32 = 4.0;
