@@ -1,0 +1,155 @@
+name: Tests
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      # This repo is a module, not a crate: it gets dropped into an amane shell.
+      # So wrap it in a throwaway crate, with a tiny stand-in for `amane` that
+      # only has what ShapeCanvas calls. This checks everything except amane's
+      # real API; the real shell is the place for that.
+      - name: Build a test crate around the module
+        run: |
+          set -euo pipefail
+          crate="$RUNNER_TEMP/crate"
+          mkdir -p "$crate/src/rounded_polygon_amane" "$crate/amane/src"
+
+          tar --exclude=./.git --exclude=./.github -cf - . | tar -xf - -C "$crate/src/rounded_polygon_amane"
+
+          cat > "$crate/Cargo.toml" <<'EOF'
+          [package]
+          name = "module-tests"
+          version = "0.0.0"
+          edition = "2021"
+
+          [dependencies]
+          amane = { path = "amane" }
+          EOF
+
+          cat > "$crate/src/main.rs" <<'EOF'
+          mod rounded_polygon_amane;
+
+          fn main() {}
+          EOF
+
+          cat > "$crate/amane/Cargo.toml" <<'EOF'
+          [package]
+          name = "amane"
+          version = "0.0.0"
+          edition = "2021"
+          EOF
+
+          cat > "$crate/amane/src/lib.rs" <<'EOF'
+          #![allow(unused)]
+          pub struct Color;
+          impl From<&str> for Color {
+              fn from(_: &str) -> Self {
+                  Color
+              }
+          }
+          impl Color {
+              pub const RED: Color = Color;
+          }
+          pub enum Cap {
+              Butt,
+              Round,
+              Square,
+          }
+          pub struct Path;
+          impl Path {
+              pub fn new() -> Self {
+                  Path
+              }
+              pub fn move_to(self, _: f32, _: f32) -> Self {
+                  self
+              }
+              pub fn line_to(self, _: f32, _: f32) -> Self {
+                  self
+              }
+              pub fn cubic_to(self, _: f32, _: f32, _: f32, _: f32, _: f32, _: f32) -> Self {
+                  self
+              }
+              pub fn close(self) -> Self {
+                  self
+              }
+          }
+          pub trait Shape: Sized {
+              fn fill(self, _: impl Into<Color>) -> Self {
+                  self
+              }
+              fn stroke(self, _: f32, _: impl Into<Color>) -> Self {
+                  self
+              }
+              fn cap(self, _: Cap) -> Self {
+                  self
+              }
+          }
+          impl Shape for Path {}
+          pub struct Canvas;
+          impl Canvas {
+              pub fn new() -> Self {
+                  Canvas
+              }
+              pub fn width(self, _: f32) -> Self {
+                  self
+              }
+              pub fn height(self, _: f32) -> Self {
+                  self
+              }
+              pub fn shapes(self, _: Vec<Box<dyn std::any::Any>>) -> Self {
+                  self
+              }
+          }
+          pub struct Rectangle;
+          impl Rectangle {
+              pub fn new() -> Self {
+                  Rectangle
+              }
+              pub fn width(self, _: f32) -> Self {
+                  self
+              }
+              pub fn height(self, _: f32) -> Self {
+                  self
+              }
+              pub fn rotate(self, _: f32) -> Self {
+                  self
+              }
+              pub fn child(self, _: Canvas) -> Self {
+                  self
+              }
+          }
+          pub fn request_frame() {}
+          #[macro_export]
+          macro_rules! shapes {
+              ($($s:expr),* $(,)?) => {
+                  vec![$(Box::new($s) as Box<dyn std::any::Any>),*]
+              };
+          }
+          EOF
+
+          echo "CRATE=$crate" >> "$GITHUB_ENV"
+
+      - name: Check formatting
+        run: cargo fmt --check
+        working-directory: ${{ env.CRATE }}
+
+      - name: Clippy
+        run: cargo clippy --all-targets -- -D warnings
+        working-directory: ${{ env.CRATE }}
+
+      - name: Test
+        run: cargo test
+        working-directory: ${{ env.CRATE }}
