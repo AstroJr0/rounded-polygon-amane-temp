@@ -37,6 +37,7 @@ pub use shapes::corners::CornerRounding;
 pub use shapes::points::Point;
 pub use shapes::polygon_manager::Morph;
 pub use shapes::rounded_polygon::RoundedPolygon;
+pub use handlers::svg_utils::from_svg;
 pub use shapes::utils::{custom_polygon, do_repeat, PointNRound};
 
 use std::collections::HashMap;
