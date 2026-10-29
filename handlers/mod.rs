@@ -2,3 +2,4 @@
 
 pub mod matrix;
 pub mod offset;
+pub mod svg_utils;
