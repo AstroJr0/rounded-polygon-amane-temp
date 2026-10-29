@@ -1,7 +1,0 @@
-[package]
-name = "rounded-polygon-amane"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-#  will add in he future
