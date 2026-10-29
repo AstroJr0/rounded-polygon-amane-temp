@@ -52,6 +52,28 @@ All 35 live in `material_shapes`
 
 `reps` is how many times the slice repeats around the center. `mirroring` flips every other copy.
 
+## SVG paths
+
+A shape from a path string. Only `m`, `l` and `c` exist. The long version is in [using_svgs.md](./using_svgs.md).
+
+| Function | Arguments | What it does | Example |
+|---|---|---|---|
+| `from_svg(path)` | `&str` | a polygon from the path. Gives `Result<RoundedPolygon, SvgError>`. | `from_svg("M 0 0 L 1 0 L 0.5 1")?` |
+| `svg_utils::move_to(x, y)` | `f32`, `f32` | the first corner, as a `PointNRound` | `svg_utils::move_to(0.2, 0.2)` |
+| `svg_utils::line_to(x, y)` | `f32`, `f32` | a corner, as a `PointNRound` | `svg_utils::line_to(0.8, 0.2)` |
+| `svg_utils::curve_to(from, c1, c2, to)` | `[f32; 2]` × 4 | a cubic Bézier cut into `CURVE_STEPS` (16) corners, as a `Vec<PointNRound>`. `from` itself is not repeated. | `svg_utils::curve_to([0.5, 0.8], [0.4, 0.9], [0.1, 0.9], [0.2, 0.5])` |
+
+| Instruction | Numbers | Meaning |
+|---|---|---|
+| `M x y` | 2 | start here. Once, first. |
+| `L x y` | 2 per corner | straight edge to here. Several pairs are fine: `L 1 0 1 1`. |
+| `C x1 y1 x2 y2 x y` | 6 per curve | curve through two handles to here |
+
+- Upper and lower case are the same. Everything is absolute.
+- No `Z`: the polygon closes itself.
+- Numbers are not scaled. Write `0..1` for the default canvas, or pixels with `.normalized(false)`.
+- Errors: `MissingMove`, `RepeatedMove`, `UnknownCommand`, `BadArguments`, `BadNumber`. They live in `svg_utils::SvgError`.
+
 ## Corner rounding
 
 | Function | Arguments | What it does | Example |
@@ -135,3 +157,7 @@ Named after Qt Quick's `Easing` types. Each gives the `[f32; 4]` that `.morph_ea
 | `easing::in_back()` `out_back()` `in_out_back()` `out_in_back()` | none, then `.overshoot(f32)` | pulls back or overshoots before settling. Default overshoot `1.70158`. `0.0` is a plain cubic. | `easing::out_back().overshoot(2.5)` |
 
 `out_back()` and the other `back` curves hold a value until they are turned into an array. `.morph_easing(...)` does that for you. To get the array yourself, call `.bezier()`.
+
+**Not included:** `elastic` and `bounce` curves wobble more than once, which one cubic Bézier can't do.
+
+Every curve here is a close match to Qt's, not an exact copy. The `out_in_*` ones are the roughest, because Qt builds them from two segments.
