@@ -11,8 +11,8 @@ It includes the 35 [Material Design shapes](https://m3.material.io/styles/shape/
 This is an amane port of:
 
 - [Androidx's shape library](https://developer.android.com/jetpack/androidx/releases/graphics), the original.
+- [Knugel's TypeScript port](https://github.com/Knugel/rounded-polygon-ts) of it. also thanks to [end-4's QML port](https://github.com/end-4/rounded-polygon-qmljs).
 - and [amane](https://github.com/Mystiafin/amane), which is an awesome desktop UI framework.. Thank u, MystiaFin.
-- not to mention, This project is heavily inspired by *(though i yoinked some code)* [Knugel's TypeScript port](https://github.com/Knugel/rounded-polygon-ts) of it. also thanks to [end-4's QML port](https://github.com/end-4/rounded-polygon-qmljs).
 
 ## Installation
 
@@ -68,7 +68,7 @@ impl Service for Toggle {
 }
 ```
 
-### A material shape
+A material shape
 
 <details>
 <summary>Show code</summary>
@@ -89,7 +89,7 @@ Each one is a function in `material_shapes`, so `material_shapes::heart` can be 
 
 All list of shapes are available [here](./helps/shapes.md)
 
-### A material shape morphing into another material shape
+A material shape morphing into another material shape
 
 Click it, and the cookie morphs into a flower and back:
 
@@ -118,7 +118,7 @@ fn cookie_to_flower() -> Rectangle {
 
 </details>
 
-### A custom polygon
+A custom polygon
 
 A `PointNRound` is a corner: where it is, and how round it is. Give `custom_polygon` the corners of one slice, and how many times to repeat it around the center:
 
@@ -145,7 +145,7 @@ fn star() -> Rectangle {
 
 The last argument mirrors every other slice. Corners take a radius, plus an optional smoothing: `CornerRounding::new(radius, smoothing)`.
 
-### A custom polygon morphing into a custom polygon
+A custom polygon morphing into a custom polygon
 
 <details>
 <summary>Show code</summary>
@@ -181,7 +181,7 @@ fn triangle_to_hexagon() -> Rectangle {
 > Polygons with a different number of corners morph fine. The corners are matched up for you.
 > This one also turns half a turn on every morph.
 
-### A custom polygon morphing into a material shape
+A custom polygon morphing into a material shape
 
 Custom and material polygons are the same type, so they mix freely:
 
@@ -218,3 +218,7 @@ fn custom_to_material() -> Rectangle {
 Put any of these in a window like any other widget: `LayerWindow::new().width(96.0).height(96.0).child(heart())`.
 
 Want something on top of a shape? Put both in a `Stack`: the shape first, then a `Rectangle` or *something else* holding the `something` i.e. `Text`.
+
+## License
+
+[Apache-2.0](./LICENSE), like the projects above.
