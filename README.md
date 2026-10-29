@@ -1,20 +1,20 @@
-<h1 align="center">Morphing Rounded Polygons in Rust</h1>
+# Morphing rounded polygons in Rust
 
 A shape library made *specifically* for [amane](https://github.com/MystiaFin/amane). Draw rounded polygons, and watch them morph into each other.
 
 It includes the 35 [Material Design shapes](https://m3.material.io/styles/shape/overview-principles#579dd4ba-39f3-4e60-bd9b-1d97ed6ef1bf). You can also make your own custom polygons!
 
-*pstt.. heres the [cheatsheet](./helps/CHEATSHEET.md)*
+*pstt.. heres the [cheatsheet](./helps/CHEATSHEET.md), and how to use [SVG paths](./helps/using_svgs.md)*
 
-<h2 align="center">Credits</h2>
+## Credits
 
 This is an amane port of:
 
 - [Androidx's shape library](https://developer.android.com/jetpack/androidx/releases/graphics), the original.
 - [Knugel's TypeScript port](https://github.com/Knugel/rounded-polygon-ts) of it. also thanks to [end-4's QML port](https://github.com/end-4/rounded-polygon-qmljs).
-- and [amane](https://github.com/Mystiafin/amane), which is an awesome desktop UI framework.. Thank u, [MystiaFin](https://github.com/MystiaFin).
+- and [amane](https://github.com/Mystiafin/amane), which is an awesome desktop UI framework.. Thank u, MystiaFin.
 
-<h2 align="center">Installation</h2>
+## Installation
 
 Actually, no installation required! Just clone this repo inside your amane dots and you're good to go:
 
@@ -28,10 +28,10 @@ Then declare it in your `main.rs`:
 mod rounded_polygon_amane;
 ```
 
-This is how it should look:
+This is where it goes:
 
 ```
-your-awesome-shell/
+my-shell/
 ├── Cargo.toml
 └── src/
     ├── main.rs                  ← mod rounded_polygon_amane;
@@ -40,9 +40,9 @@ your-awesome-shell/
         └── ...
 ```
 
-No `Cargo.toml` changes. It only uses `amane`, which your shell *is supposed to have*.
+No `Cargo.toml` changes. It only uses `amane`, which your shell *supposed to have*.
 
-<h2 align="center">Usage</h2>
+## Usage
 
 Every example below is a function that returns a widget. `ShapeCanvas::build()` gives you a normal amane `Rectangle`, so you can add `.on_click(...)`, `.opacity(...)` and the rest to it.
 
@@ -53,9 +53,8 @@ use crate::rounded_polygon_amane::{
     custom_polygon, CornerRounding, Offset, PointNRound, RoundedPolygon, ShapeCanvas,
 };
 ```
-A morph happens by itself whenever the polygon you hand to `rounded_polygon` changes between redraws.
 
-To see one, you need some state to change. Examples below use a small [service](https://mystiafin.github.io/amane/services.html) with one switch:
+A morph happens by itself whenever the polygon you hand to `rounded_polygon` changes between redraws. To see one, you need some state to change. The examples use a small [service](https://mystiafin.github.io/amane/services.html) with one switch:
 
 ```rust
 struct Toggle {
@@ -69,7 +68,7 @@ impl Service for Toggle {
 }
 ```
 
-<h3 align="center">A Material Shape</h3>
+### A material shape
 
 <details>
 <summary>Show code</summary>
@@ -90,7 +89,7 @@ Each one is a function in `material_shapes`, so `material_shapes::heart` can be 
 
 All list of shapes are available [here](./helps/shapes.md)
 
-<h3 align="center">A material shape morphing into another material shape</h3>
+### A material shape morphing into another material shape
 
 Click it, and the cookie morphs into a flower and back:
 
@@ -119,7 +118,7 @@ fn cookie_to_flower() -> Rectangle {
 
 </details>
 
-<h3 align="center">A custom polygon</h3>
+### A custom polygon
 
 A `PointNRound` is a corner: where it is, and how round it is. Give `custom_polygon` the corners of one slice, and how many times to repeat it around the center:
 
@@ -146,7 +145,7 @@ fn star() -> Rectangle {
 
 The last argument mirrors every other slice. Corners take a radius, plus an optional smoothing: `CornerRounding::new(radius, smoothing)`.
 
-<h3 align="center">A custom polygon morphing into another custom polygon</h3>
+### A custom polygon morphing into a custom polygon
 
 <details>
 <summary>Show code</summary>
@@ -182,10 +181,9 @@ fn triangle_to_hexagon() -> Rectangle {
 > Polygons with a different number of corners morph fine. The corners are matched up for you.
 > This one also turns half a turn on every morph.
 
+### A custom polygon morphing into a material shape
 
-<h3 align="center">A custom polygon morphine into a material shape</h3>
-
-`custom_polygon` and `material_shapes` are the same type, so they mix freely:
+Custom and material polygons are the same type, so they mix freely:
 
 <details>
 <summary>Show code</summary>
@@ -217,9 +215,10 @@ fn custom_to_material() -> Rectangle {
 
 </details>
 
-you can also put any of these in a window like any other widget: `LayerWindow::new().width(96.0).height(96.0).child(heart())`.
+Put any of these in a window like any other widget: `LayerWindow::new().width(96.0).height(96.0).child(heart())`.
 
 Want something on top of a shape? Put both in a `Stack`: the shape first, then a `Rectangle` or *something else* holding the `something` i.e. `Text`.
 
 ## License
-[Apache-2.0](./LICENSE)
+
+[Apache-2.0](./LICENSE), like the projects above.
