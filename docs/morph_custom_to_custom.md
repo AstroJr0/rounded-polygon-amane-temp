@@ -1,4 +1,4 @@
-# Custom Polygon to Custom Polygon
+<h1>Custom Polygon to Custom Polygon</h1>
 
 This page shows a morph between two custom polygons that differ in the number of corners and in their roundness.
 
@@ -29,7 +29,7 @@ fn triangle_to_hexagon() -> Rectangle {
 }
 ```
 
-`Toggle` is defined in [Usage](./usage.md). The definition of a custom polygon is explained in [Defining a Custom Polygon](./def_custom_polygon.md).
+`Toggle` is defined in [Usage](./usage.md). The definition of a custom polygon is explained in [Defining a Custom Polygon](./def_custom_polygon.md). It is not necessary, `Toggle` is defined to demonstrate the morping principle. Anything can be used such as `hover`, a `timer` and so on.
 
 ## Explanation
 
@@ -45,4 +45,4 @@ Two further settings appear in the example:
 - `.rotate_on_morph(true)` makes the shape turn while it morphs.
 - `.rotation_on_morph(180.0)` sets the turn to half a revolution per morph, in degrees, clockwise. The default is 360.
 
-The timing of the morph itself may be changed with `.morph_easing(...)`, which accepts a cubic Bézier curve such as one from `presets::easing`. The timing of the turn is changed with `.easing_on_rotation(...)`.
+The timing of the morph itself may be changed with `.morph_easing(...)`, which accepts a cubic Bezier curve such as one from `presets::easing`. The timing of the turn is changed with `.easing_on_rotation(...)`.
