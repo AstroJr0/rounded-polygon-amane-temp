@@ -17,81 +17,8 @@ This is an amane port of:
 ## Documentation 
 Documentation is available [here](https://astrojr0.github.io/rounded_polygon_amane)
 
-## Usage
 
-Every example below is a function that returns a widget. `ShapeCanvas::build()` gives you a normal amane `Rectangle`, so you can add `.on_click(...)`, `.opacity(...)` and the rest to it.
 
-```rust
-use amane::*;
-use crate::rounded_polygon_amane::presets::material_shapes;
-use crate::rounded_polygon_amane::{
-    custom_polygon, CornerRounding, Offset, PointNRound, RoundedPolygon, ShapeCanvas,
-};
-```
-
-A morph happens by itself whenever the polygon you hand to `rounded_polygon` changes between redraws. To see one, you need some state to change. The examples use a small [service](https://mystiafin.github.io/amane/services.html) with one switch:
-
-```rust
-struct Toggle {
-    on: bool,
-}
-
-impl Service for Toggle {
-    fn new() -> Self {
-        Self { on: false }
-    }
-}
-```
-
-### A material shape
-
-<details>
-<summary>Show code</summary>
-
-```rust
-fn heart() -> Rectangle {
-    ShapeCanvas::new()
-        .rounded_polygon(material_shapes::heart)
-        .color("#f38ba8")
-        .size(96.0, 96.0)
-        .build()
-}
-```
-
-</details>
-
-Each one is a function in `material_shapes`, so `material_shapes::heart` can be passed straight to `.rounded_polygon(...)`.
-
-All list of shapes are available [here](./helps/shapes.md)
-
-### A material shape morphing into another material shape
-
-Click it, and the cookie morphs into a flower and back:
-
-<details>
-<summary>Show code</summary>
-
-```rust
-fn cookie_to_flower() -> Rectangle {
-    let on = Toggle::read().on;
-
-    ShapeCanvas::new()
-        .rounded_polygon(move || {
-            if on {
-                material_shapes::flower()
-            } else {
-                material_shapes::cookie_9_sided()
-            }
-        })
-        .color("#cba6f7")
-        .size(96.0, 96.0)
-        .morph_duration(400.0)
-        .build()
-        .on_click(|_| Toggle::write().on = !on)
-}
-```
-
-</details>
 
 ### A custom polygon
 
