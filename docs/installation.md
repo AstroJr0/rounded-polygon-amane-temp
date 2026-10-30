@@ -1,27 +1,35 @@
-## Installation
+# Installation
 
-Actually, no installation required! Just clone this repo inside your amane dots and you're good to go:
+This library is a module, not a crate. No installation in the usual sense is required: the repository is placed inside the source tree of an amane shell, and the shell declares it as a module.
 
-```sh
-git clone https://github.com/AstroJr0/rounded_polygon_amane
+## Steps
+
+1. Clone the repository into the `src` directory of the shell, so that the folder is named `rounded_polygon_amane`:
+
+   ```sh
+   git clone https://github.com/AstroJr0/rounded_polygon_amane
+   ```
+
+2. Declare the module in `main.rs`:
+
+   ```rust
+   mod rounded_polygon_amane;
+   ```
+
+This is how it should look like:
+
 ```
-
-Then declare it in your `main.rs`:
-
-```rust
-mod rounded_polygon_amane;
-```
-
-This is where it goes:
-
-```
-my-shell/
+my-awesome-shell/
 ├── Cargo.toml
 └── src/
     ├── main.rs                  ← mod rounded_polygon_amane;
-    └── rounded_polygon_amane/   ← this repo
+    └── rounded_polygon_amane/   ← this repository
         ├── mod.rs
         └── ...
 ```
 
-No `Cargo.toml` changes. It only uses `amane`, which your shell *supposed to have*.
+## Dependencies
+
+No change to `Cargo.toml` is necessary. The module depends only on `amane`, which every amane shell already provides.
+
+Because the module is part of the shell's own crate, its items are reached through `crate::rounded_polygon_amane`, as the examples in this documentation show.
