@@ -1,6 +1,6 @@
 # Cheat Sheet 🥋
 
-Every function you'll use, on one page. Material shape names are in the [README](../README.md).
+Every function you'll use, on one page. Material shape names are in [Available Shapes](./shapes.md).
 
 All names come from `rounded_polygon_amane`. To bring in the common ones:
 
