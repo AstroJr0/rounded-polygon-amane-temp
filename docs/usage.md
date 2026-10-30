@@ -1,4 +1,4 @@
-# Usage
+<h1 align="center">Using the module</h1>
 
 Every example in this documentation is a function that returns a widget. `ShapeCanvas::build()` returns an ordinary amane `Rectangle`; consequently, any method available on a `Rectangle`, such as `.on_click(...)` or `.opacity(...)`, may be called on the result.
 
