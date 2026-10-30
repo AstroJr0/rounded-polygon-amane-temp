@@ -1,4 +1,4 @@
-# Cheat Sheet 🥋
+<h1 align="center">Cheat Sheet 🥋</h1>
 
 Every function you'll use, on one page. Material shape names are in [Available Shapes](./shapes.md).
 
