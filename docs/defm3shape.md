@@ -1,6 +1,6 @@
-# Defining a Material Shape
+<h1 align="center">Defining a Material Shape</h1>
 
-The library contains thirty-five ready-made shapes taken from the [Material Design shape set](https://m3.material.io/styles/shape/overview-principles#579dd4ba-39f3-4e60-bd9b-1d97ed6ef1bf). They are located in the module `presets::material_shapes`.
+The library contains all 35 ready-made shapes taken from the [Material Design shape set](https://m3.material.io/styles/shape/overview-principles#579dd4ba-39f3-4e60-bd9b-1d97ed6ef1bf). They are located in the module `presets::material_shapes`.
 
 ## Example
 
