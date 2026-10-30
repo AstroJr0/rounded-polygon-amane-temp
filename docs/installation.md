@@ -1,6 +1,6 @@
-# Installation
+<h1 align="center">Installation</h1>
 
-This library is a module, not a crate. No installation in the usual sense is required: the repository is placed inside the source tree of an amane shell, and the shell declares it as a module.
+This library is a module, not a whole crate. No usual sense installation is required. The repository is placed inside the source tree of an amane shell, and the shell declares it as a module. And everything would work as it should be.
 
 ## Steps
 
