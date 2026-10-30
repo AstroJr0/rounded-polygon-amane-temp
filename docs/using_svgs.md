@@ -1,4 +1,4 @@
-# Using Vector paths to define a polygon 🖋️
+<h1 align="center">Using Vector paths to define a polygon</h1>
 
 `from_svg` turns a path string into a `RoundedPolygon`, so `ShapeCanvas` can draw it and morph to it like any other shape.
 
