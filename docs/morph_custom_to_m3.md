@@ -1,6 +1,6 @@
-# Custom Polygon to Material Shape
+<h1 align="center">Custom Polygon to Material Shape</h1>
 
-A custom polygon and a Material shape are both of type `RoundedPolygon`. They may therefore be used together freely, including as the two ends of a morph.
+A `custom_polygon` and a `material_shape` are both of type `RoundedPolygon`. They may therefore be used together freely, including as the two ends of a morph.
 
 ## Example
 
