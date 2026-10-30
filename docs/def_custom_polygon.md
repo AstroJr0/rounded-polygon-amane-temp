@@ -1,4 +1,4 @@
-# Defining a Custom Polygon
+<h1 align="center">Defining a Custom Polygon</h1> 
 
 A custom polygon is described by a list of corners, one *slice* of the shape, together with the number of times the slice is repeated around a centre point.
 
