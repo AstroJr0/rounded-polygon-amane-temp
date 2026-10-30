@@ -1,4 +1,4 @@
-# Using SVGs 🖋️
+# Using Vector paths to define a polygon 🖋️
 
 `from_svg` turns a path string into a `RoundedPolygon`, so `ShapeCanvas` can draw it and morph to it like any other shape.
 
@@ -56,7 +56,14 @@ ShapeCanvas::new()
 
 Y grows downward, like on screen and in SVG.
 
-**A path from a design tool** (say a 500×300 viewbox): use pixels with `.normalized(false)` and the same size, as above. Going the `0..1` way, divide every number by the longer side (500), so the shape keeps its proportions. The default canvas scales by its shorter side, so a non-square shape needs a canvas of the same ratio.
+**A path from a design tool.** Such a path is usually written in the pixels of its own viewbox, for example 500 by 300. Two approaches are available:
+
+1. Use the numbers as they are, give the canvas `.normalized(false)`, and set `.size(...)` to the viewbox size, as in the second example above.
+2. Call `.normalized()` on the result. This scales and moves the polygon to fit the unit square, keeping its proportions and centring it along the shorter side. The default canvas then draws it at any size:
+
+```rust
+from_svg("M 0 0 L 500 0 L 250 300").expect("bad svg").normalized()
+```
 
 ## What happens to curves
 
