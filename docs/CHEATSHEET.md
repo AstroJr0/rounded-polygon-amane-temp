@@ -157,7 +157,3 @@ Named after Qt Quick's `Easing` types. Each gives the `[f32; 4]` that `.morph_ea
 | `easing::in_back()` `out_back()` `in_out_back()` `out_in_back()` | none, then `.overshoot(f32)` | pulls back or overshoots before settling. Default overshoot `1.70158`. `0.0` is a plain cubic. | `easing::out_back().overshoot(2.5)` |
 
 `out_back()` and the other `back` curves hold a value until they are turned into an array. `.morph_easing(...)` does that for you. To get the array yourself, call `.bezier()`.
-
-**Not included:** `elastic` and `bounce` curves wobble more than once, which one cubic Bézier can't do.
-
-Every curve here is a close match to Qt's, not an exact copy. The `out_in_*` ones are the roughest, because Qt builds them from two segments.
