@@ -1,4 +1,4 @@
-<h1>Custom Polygon to Custom Polygon</h1>
+<h1 align="center">Custom Polygon to Custom Polygon</h1>
 
 This page shows a morph between two custom polygons that differ in the number of corners and in their roundness.
 
