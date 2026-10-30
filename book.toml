@@ -1,0 +1,10 @@
+[book]
+title = "rounded_polygon_amane"
+description = "Morphing rounded polygons for the amane shell"
+authors = ["AstroJr0"]
+language = "en"
+src = "docs"
+
+[output.html]
+git-repository-url = "https://github.com/AstroJr0/rounded_polygon_amane"
+edit-url-template = "https://github.com/AstroJr0/rounded_polygon_amane/edit/main/{path}"
