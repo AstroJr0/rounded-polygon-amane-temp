@@ -17,42 +17,6 @@ This is an amane port of:
 ## Documentation 
 Documentation is available [here](https://astrojr0.github.io/rounded_polygon_amane)
 
-### A custom polygon morphing into a custom polygon
-
-<details>
-<summary>Show code</summary>
-
-```rust
-fn blob(corners: usize, radius: f32) -> impl FnOnce() -> RoundedPolygon {
-    move || {
-        let slice = [PointNRound::new(
-            Offset::new(0.5, 0.0),
-            CornerRounding::from_radius(radius),
-        )];
-        custom_polygon(&slice, corners, Offset::new(0.5, 0.5), false).normalized()
-    }
-}
-
-fn triangle_to_hexagon() -> Rectangle {
-    let on = Toggle::read().on;
-
-    ShapeCanvas::new()
-        .rounded_polygon(if on { blob(6, 0.3) } else { blob(3, 0.2) })
-        .color("#a6e3a1")
-        .size(96.0, 96.0)
-        .rotate_on_morph(true)
-        .rotation_on_morph(180.0)
-        .build()
-        .on_click(|_| Toggle::write().on = !on)
-}
-```
-
-</details>
-
-> [!TIP]
-> Polygons with a different number of corners morph fine. The corners are matched up for you.
-> This one also turns half a turn on every morph.
-
 ### A custom polygon morphing into a material shape
 
 Custom and material polygons are the same type, so they mix freely:
