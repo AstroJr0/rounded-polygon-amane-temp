@@ -1,4 +1,4 @@
-# Material Shape to Material Shape
+<h1 align="center">Material Shape to Material Shape</h1>
 
 This page shows a morph between two ready-made shapes. A click switches the polygon, and the canvas animates the change.
 
