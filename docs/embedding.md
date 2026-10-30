@@ -1,8 +1,8 @@
-# Placing a Shape in a Window
+<h1 align="center">Placing a Shape in a Window</h1>
 
 `ShapeCanvas::build()` returns an amane `Rectangle`. It is therefore placed in an interface in the same way as any other widget.
 
-## In a Window
+## Inside a Window
 
 ```rust
 LayerWindow::new().width(96.0).height(96.0).child(heart())
@@ -12,7 +12,7 @@ Here `heart()` is the function from [Defining a Material Shape](./defm3shape.md)
 
 ## Content on Top of a Shape
 
-To place content over a shape, both are put into a `Stack`. A stack draws its children in order, so the shape is listed first and the content, for example a `Text`, after it.
+To place content over a shape, both are put into a `Stack`. A stack draws its children in order, so the shape is listed first and the content, for example a `Text` element, after it.
 
 ## Several Canvases
 
