@@ -14,6 +14,9 @@ This is an amane port of:
 - [Knugel's TypeScript port](https://github.com/Knugel/rounded-polygon-ts) of it. also thanks to [end-4's QML port](https://github.com/end-4/rounded-polygon-qmljs).
 - and [amane](https://github.com/Mystiafin/amane), which is an awesome desktop UI framework.. Thank u, MystiaFin.
 
+## Documentation 
+Documentation is available [here](https://astrojr0.github.io/rounded_polygon_amane)
+
 ## Installation
 
 Actually, no installation required! Just clone this repo inside your amane dots and you're good to go:
